@@ -1,0 +1,30 @@
+[project]
+name = "jev-desktop"
+version = "0.1.0"
+description = "A Windows desktop agent that chooses instead of generating."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.12"
+dependencies = ["comtypes>=1.4", "pywinauto>=0.6.9", "httpx[http2]>=0.28,<1"]
+keywords = ["agent", "windows", "desktop-automation", "ui-automation", "llm", "typesafe"]
+classifiers = ["Operating System :: Microsoft :: Windows", "Programming Language :: Python :: 3"]
+
+[project.urls]
+Homepage = "https://github.com/ehtan-smaltai/jev-desktop"
+Issues = "https://github.com/ehtan-smaltai/jev-desktop/issues"
+
+[project.scripts]
+jevd = "jev_desktop.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = ["pytest>=8.4,<9", "ruff>=0.14,<1"]
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
