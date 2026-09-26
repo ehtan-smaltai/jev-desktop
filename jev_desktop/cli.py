@@ -22,6 +22,19 @@ def load_env(path):
     return True
 
 
+def interactive():
+    """True only for a real console. On Windows, isatty() is also True for the NUL device."""
+    try:
+        import ctypes
+        import msvcrt
+
+        mode = ctypes.c_uint32()
+        handle = msvcrt.get_osfhandle(sys.stdin.fileno())
+        return bool(ctypes.windll.kernel32.GetConsoleMode(handle, ctypes.byref(mode)))
+    except (OSError, ValueError, AttributeError):
+        return False
+
+
 def print_observation(page):
     print(f"Window: {page['title']}  [{page['app']}]  observed in {page['observe_ms']} ms")
     for action in page["actions"]:
@@ -73,7 +86,7 @@ def main(argv=None):
     if not args.goal:
         parser.error("give a goal, or use --observe")
     if not os.environ.get("TYPESAFE_API_KEY"):
-        if not sys.stdin.isatty():
+        if not interactive():
             parser.error(f"TYPESAFE_API_KEY is not set (looked in {env_file}). Run: jevd setup")
         print("No API keys yet. Let's set them up first.\n")
         load_env(run_setup())
