@@ -192,8 +192,9 @@ def test_redact_removes_keys_before_they_reach_a_model():
     from jev_desktop.redact import redact
 
     screen = (
-        "TYPESAFE_API_KEY=apikey_0000fake0000fake0000fake0000\n"
-        "Open Router: sk-or-v1-fake0000fake0000fake0000fake0000fake\n"
+        # Fake, low-entropy keys for the redaction test. gitleaks:allow
+        "TYPESAFE_API_KEY=apikey_0000fake0000fake0000fake0000\n"  # gitleaks:allow
+        "Open Router: sk-or-v1-fake0000fake0000fake0000fake0000fake\n"  # gitleaks:allow
         "password: hunter2\n"
         "token abcdef0123456789abcdef0123456789abcdef\n"
         "normal words stay, like Notepad and 2026."
